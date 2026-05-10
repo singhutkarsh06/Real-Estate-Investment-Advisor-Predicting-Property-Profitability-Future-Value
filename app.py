@@ -1,3 +1,38 @@
+import os
+import pickle
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier, XGBRegressor
+
+# Auto train if model files don't exist
+if not os.path.exists('model_classification_rf.pkl'):
+    df_train = pd.read_csv('india_housing_processed.csv')
+
+    features = ['BHK', 'Size_in_SqFt', 'Price_in_Lakhs', 'Price_per_SqFt_calc',
+                'Floor_No', 'Total_Floors', 'Floor_Ratio', 'Property_Age',
+                'Nearby_Schools', 'Nearby_Hospitals', 'Transport_Score',
+                'Infrastructure_Score', 'Amenities_Count', 'School_Density_Score',
+                'State', 'City', 'Property_Type', 'Furnished_Status',
+                'Facing', 'Owner_Type', 'Availability_Status']
+
+    X = df_train[features]
+    y_clf = df_train['Good_Investment']
+    y_reg = df_train['Future_Price_5yr']
+
+    # Train classification model
+    rf = RandomForestClassifier(n_estimators=50, random_state=42)
+    rf.fit(X, y_clf)
+    with open('model_classification_rf.pkl', 'wb') as f:
+        pickle.dump(rf, f)
+
+    # Train regression model
+    xgb_r = XGBRegressor(n_estimators=50, random_state=42)
+    xgb_r.fit(X, y_reg)
+    with open('model_regression_xgb.pkl', 'wb') as f:
+        pickle.dump(xgb_r, f)
+
+    print('Models trained and saved!')
+
 import streamlit as st
 import pandas as pd
 import numpy as np
