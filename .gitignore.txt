@@ -1,0 +1,5 @@
+india_housing_prices.csv
+model_classification_rf.pkl
+__pycache__/
+*.pyc
+.venv/
