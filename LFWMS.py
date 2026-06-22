@@ -7,11 +7,11 @@ from psycopg2.extras import RealDictCursor
 # ── DB CONNECTION ──
 def get_connection():
     return psycopg2.connect(
-        host=st.secrets["postgres"]["host"],
-        database=st.secrets["postgres"]["database"],
-        user=st.secrets["postgres"]["user"],
-        password=st.secrets["postgres"]["password"],
-        port=st.secrets["postgres"]["port"]
+        host=st.secrets["postgres"]["localhost"],
+        database=st.secrets["postgres"]["Local Food Wastage Management System"],
+        user=st.secrets["postgres"]["postgres"],
+        password=st.secrets["postgres"]["0603"],
+        port=st.secrets["postgres"]["5433"]
     )
 
 def run_query(sql, params=None):
